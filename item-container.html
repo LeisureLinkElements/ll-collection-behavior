@@ -21,18 +21,13 @@
 
     },
 
-    ready: function() {
-      this._fireLogFire('ready');
-      this._fireLog(this.data);
-    },
-
     attached: function() {
       this._fireLogFire('attached');
     },
 
     createItem: function(itemFactory) {
+      Polymer.dom(this).innerHTML = '';
       this.item = Polymer.dom(this).appendChild(new itemFactory);
-      this._fireLog('created item',this.item);
       _.assign(this.item, this.data);
     }
 
