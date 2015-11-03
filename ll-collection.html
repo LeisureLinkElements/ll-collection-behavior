@@ -12,7 +12,7 @@
 <dom-module id="ll-collection">
   <template>
     <template is="dom-repeat" items="{{items}}">
-      <item-container data="{{item}}" itemFactory="[[itemFactory]]" fire-log fire-log-event-prefix="item-container-"></item-container>
+      <item-container data="{{item}}" fire-log fire-log-event-prefix="item-container-"></item-container>
     </template>
   </template>
 </dom-module>
@@ -38,14 +38,14 @@
         }
       },
 
+      itemFactoryName: String,
+
       itemFactory: Object
 
     },
 
-    setItemFactory: function (func) {
-      if(_.isFunction(func)) {
-        this.itemFactory = func;
-      }
+    attached: function() {
+      this.itemFactory = window[this.itemFactoryName];
     },
 
     _itemContainerAttached: function(evt) {
