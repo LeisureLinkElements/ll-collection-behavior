@@ -12,7 +12,8 @@
 <dom-module id="ll-collection">
   <template>
     <template is="dom-repeat" items="{{items}}">
-      <item-container data="{{item}}" fire-log fire-log-event-prefix="item-container-"></item-container>
+      <item-container data="{{item}}" factory-name="[[itemFactoryName]]" fire-log
+                      fire-log-event-prefix="item-container-"></item-container>
     </template>
   </template>
 </dom-module>
@@ -25,10 +26,6 @@
 
     behaviors: [LeisureLinkBehaviors.FireLogBehavior],
 
-    listeners: {
-      'item-container-attached': '_itemContainerAttached'
-    },
-
     properties: {
 
       items: {
@@ -38,19 +35,11 @@
         }
       },
 
-      itemFactoryName: String,
-
-      itemFactory: Object
+      itemFactoryName: String
 
     },
 
-    attached: function() {
-      this.itemFactory = window[this.itemFactoryName];
-    },
 
-    _itemContainerAttached: function(evt) {
-      evt.target.createItem(this.itemFactory);
-    }
 
   });
 </script>

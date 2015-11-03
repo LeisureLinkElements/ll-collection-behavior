@@ -15,19 +15,15 @@
 
     properties: {
 
-      itemFactory: Object,
+      factoryName: String,
 
       item: Object
 
     },
 
     attached: function() {
-      this._fireLogFire('attached');
-    },
-
-    createItem: function(itemFactory) {
       Polymer.dom(this).innerHTML = '';
-      this.item = Polymer.dom(this).appendChild(new itemFactory);
+      this.item = Polymer.dom(this).appendChild(new window[this.factoryName]);
       _.assign(this.item, this.data);
     }
 
