@@ -1,0 +1,36 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../ll-collection.html">
+  <link rel="import" href="test-item.html">
+</head>
+<body>
+
+<ll-collection id="myCollection">
+  <test-item/>
+</ll-collection>
+
+<script>
+  var myEl = document.getElementById('myCollection');
+  myEl.items = [
+    {
+      info: 'nice day',
+      lastName: 'Simon'
+    },
+    {
+      info: 'hello there',
+      lastName: 'Jansen'
+    }
+  ];
+</script>
+
+</body>
+</html>

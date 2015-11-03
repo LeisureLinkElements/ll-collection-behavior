@@ -1,0 +1,18 @@
+<link rel="import" href="../../polymer/polymer.html">
+
+<dom-module id="demo-item">
+  <template>
+    <div>
+      <p>[[info]]</p>
+      <input name="lastName" value="{{lastName::input}}"/>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  DemoItem = Polymer({
+
+    is: 'demo-item'
+
+  });
+</script>

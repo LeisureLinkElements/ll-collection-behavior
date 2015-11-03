@@ -1,0 +1,56 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="item-container.html">
+<link rel="import" href="../ll-firelog-behavior/ll-firelog-behavior.html">
+
+<script type="application/javascript" src="../lodash/lodash.js"></script>
+
+<!--
+### Summary:
+@demo
+-->
+
+<dom-module id="ll-collection">
+  <template>
+    <template is="dom-repeat" items="{{items}}">
+      <item-container data="{{item}}" itemFactory="[[itemFactory]]" fire-log fire-log-event-prefix="item-container-"></item-container>
+    </template>
+  </template>
+</dom-module>
+
+<script>
+
+  LLCollection = Polymer({
+
+    is: 'll-collection',
+
+    behaviors: [LeisureLinkBehaviors.FireLogBehavior],
+
+    listeners: {
+      'item-container-attached': '_itemContainerAttached'
+    },
+
+    properties: {
+
+      items: {
+        type: Array,
+        value: function () {
+          return [];
+        }
+      },
+
+      itemFactory: Object
+
+    },
+
+    setItemFactory: function (func) {
+      if(_.isFunction(func)) {
+        this.itemFactory = func;
+      }
+    },
+
+    _itemContainerAttached: function(evt) {
+      evt.target.createItem(this.itemFactory);
+    }
+
+  });
+</script>

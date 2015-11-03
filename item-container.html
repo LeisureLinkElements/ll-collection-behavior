@@ -1,0 +1,40 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../ll-firelog-behavior/ll-firelog-behavior.html">
+
+<script type="application/javascript" src="../lodash/lodash.js"></script>
+
+<dom-module id="item-container"></dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'item-container',
+
+    behaviors: [LeisureLinkBehaviors.FireLogBehavior],
+
+    properties: {
+
+      itemFactory: Object,
+
+      item: Object
+
+    },
+
+    ready: function() {
+      this._fireLogFire('ready');
+      this._fireLog(this.data);
+    },
+
+    attached: function() {
+      this._fireLogFire('attached');
+    },
+
+    createItem: function(itemFactory) {
+      this.item = Polymer.dom(this).appendChild(new itemFactory);
+      this._fireLog('created item',this.item);
+      _.assign(this.item, this.data);
+    }
+
+  });
+</script>

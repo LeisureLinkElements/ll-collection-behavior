@@ -1,0 +1,31 @@
+{
+  "name": "ll-collection",
+  "version": "1.0.0",
+  "authors": [
+    "Charles Koehl <ckoehl@leisurelink.com>"
+  ],
+  "description": "viewable/editable list view for instances of a polymer element with add new and remove functionality",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed"
+  ],
+  "main": "ll-collection.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/LeisureLinkElements/ll-collection",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "ll-firelog-behavior": "LeisureLinkElements/ll-firelog-behavior",
+    "lodash": ">=3.10.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}
