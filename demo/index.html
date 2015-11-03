@@ -13,11 +13,10 @@
 </head>
 <body>
 
-<ll-collection id="myCollection" fire-log></ll-collection>
+<ll-collection id="someDemoItems" item-factory-name="DemoItem"fire-log/>
 
 <script>
-  var myEl = document.getElementById('myCollection');
-  myEl.setItemFactory(DemoItem);
+  var myEl = document.getElementById('someDemoItems');
   myEl.items = [
     {
       info: 'nice day',
