@@ -8,25 +8,85 @@
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
   <!-- Step 1: import the element to test -->
-  <link rel="import" href="../ll-collection.html">
+  <link rel="import" href="demo-collection.html">
   <link rel="import" href="demo-item.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+
+  <style>
+
+    demo-item {
+      display:block;
+      margin:10px 0;
+    }
+
+    paper-button {
+      margin: 0 20px 0 0;
+      text-transform: none;
+    }
+
+    paper-button.colorful {
+      color: #4285f4;
+    }
+
+    paper-button[raised].colorful {
+      background: #4285f4;
+      color: #fff;
+    }
+
+    paper-button[toggles] {
+      transition: all 0.3s;
+    }
+
+    paper-button[toggles][active] {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    paper-button[toggles][active].colorful {
+      background-color: rgba(66, 133, 244, 0.25);
+    }
+
+    paper-button[toggles][active][raised].colorful {
+      background-color: rgba(66, 133, 244, 0.75);
+    }
+
+    paper-button.hover:hover {
+      background: #eee;
+    }
+
+    paper-button.ripple {
+      --paper-button-ink-color: var(--paper-pink-a200);
+    }
+
+  </style>
+
 </head>
 <body>
 
-<ll-collection id="someDemoItems" item-factory-name="DemoItem" fire-log/>
+<paper-button class="colorful" raised onClick="logItems()">Log Items</paper-button>
+
+<paper-button class="colorful" raised onClick="addNew()">Add New</paper-button>
+
+<demo-collection id="someDemoItems" fire-log/>
 
 <script>
   var myEl = document.getElementById('someDemoItems');
-  myEl.items = [
+  myEl.employees = [
     {
-      info: 'nice day',
-      lastName: 'Simon'
+      firstName: 'Grover',
+      lastName: 'Cleveland'
     },
     {
-      info: 'hello there',
-      lastName: 'Jansen'
+      firstName: 'Bill',
+      lastName: 'Nigh'
     }
   ];
+  function addNew() {
+    console.log('adding');
+    myEl.lcbAdd();
+  }
+  function logItems() {
+    myEl.lcbLogItems();
+  }
 </script>
 
 </body>

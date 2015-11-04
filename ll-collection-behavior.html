@@ -1,0 +1,46 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../ll-firelog-behavior/ll-firelog-behavior.html">
+
+<script type="application/javascript" src="../lodash/lodash.js"></script>
+
+<script>
+
+  var LeisureLinkBehaviors = LeisureLinkBehaviors || {};
+
+  /**
+   * ### Summary
+   *
+   *
+   * ### Usage
+   *
+   *
+   * @demo
+   * @polymerBehavior
+   */
+  LeisureLinkBehaviors.CollectionBehaviorImpl = {
+
+    properties: {
+
+      /**
+       * Name of the property containing the items for this collection; eg: 'employees'
+       */
+      lcbItemsName: String
+
+    },
+
+    /**
+     * Add item to collection
+     * @param data {object} Optional data for new item.
+     */
+    lcbAdd: function(data) {
+      this.push(this.lcbItemsName, data || {});
+    },
+
+    lcbLogItems: function() {
+      this._fireLog(this.lcbItemsName + ':', this[this.lcbItemsName]);
+    }
+
+
+  };
+  LeisureLinkBehaviors.CollectionBehavior = [LeisureLinkBehaviors.FireLogBehavior, LeisureLinkBehaviors.CollectionBehaviorImpl]
+</script>

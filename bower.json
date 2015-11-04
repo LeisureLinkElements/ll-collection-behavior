@@ -1,5 +1,5 @@
 {
-  "name": "ll-collection",
+  "name": "ll-collection-behavior",
   "version": "1.0.0",
   "authors": [
     "Charles Koehl <ckoehl@leisurelink.com>"
@@ -11,9 +11,9 @@
     "polymer",
     "seed"
   ],
-  "main": "ll-collection.html",
+  "main": "ll-collection-behavior.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/LeisureLinkElements/ll-collection",
+  "homepage": "https://github.com/LeisureLinkElements/ll-collection-behavior",
   "ignore": [
     "/.*",
     "/test/",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "paper-button": "PolymerElements/paper-button#1.0.8",
     "web-component-tester": "*"
   }
 }

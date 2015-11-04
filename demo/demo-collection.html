@@ -1,0 +1,36 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../ll-collection-behavior.html">
+
+<dom-module id="demo-collection">
+  <template>
+    <template is="dom-repeat" items="{{employees}}">
+      <demo-item item="{{item}}" index="[[index]]"></demo-item>
+    </template>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'demo-collection',
+
+    behaviors: [LeisureLinkBehaviors.CollectionBehavior],
+
+    properties: {
+
+      employees: {
+        type: Array,
+        value: function () {
+          return [];
+        }
+      },
+
+      lcbItemsName: {
+        type: String,
+        value: 'employees'
+      }
+
+    }
+
+  });
+</script>
