@@ -9,12 +9,11 @@
 
   <!-- Step 1: import the element to test -->
   <link rel="import" href="demo-collection.html">
-  <link rel="import" href="demo-item.html">
   <link rel="import" href="../../paper-button/paper-button.html">
 
   <style>
 
-    demo-item {
+    .employee {
       display:block;
       margin:10px 0;
     }
@@ -66,7 +65,9 @@
 
 <paper-button class="colorful" raised onClick="addNew()">Add New</paper-button>
 
-<demo-collection id="someDemoItems" fire-log/>
+<paper-button class="colorful" raised onClick="emptyTrash()">Empty Trash</paper-button>
+
+<demo-collection id="someDemoItems" lcb-items-name="employees" fire-log/>
 
 <script>
   var myEl = document.getElementById('someDemoItems');
@@ -78,14 +79,28 @@
     {
       firstName: 'Bill',
       lastName: 'Nigh'
+    },
+    {
+      firstName: 'Jon',
+      lastName: 'Jones'
+    },
+    {
+      firstName: 'Sally',
+      lastName: 'Kellerman'
+    },
+    {
+      firstName: 'Bob',
+      lastName: 'Guccione'
     }
   ];
   function addNew() {
-    console.log('adding');
     myEl.lcbAdd();
   }
   function logItems() {
     myEl.lcbLogItems();
+  }
+  function emptyTrash() {
+    myEl.lcbEmptyTrash();
   }
 </script>
 

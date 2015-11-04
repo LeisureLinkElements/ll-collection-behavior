@@ -28,18 +28,67 @@
 
     },
 
+    listeners: {
+      'lcb-trash-me': '_lcbTrashMe',
+      'lcb-delete-me': '_lcbDeleteMe'
+    },
+
     /**
      * Add item to collection
      * @param data {object} Optional data for new item.
      */
-    lcbAdd: function(data) {
+    lcbAdd: function (data) {
       this.push(this.lcbItemsName, data || {});
     },
 
-    lcbLogItems: function() {
+    /**
+     * Delete the item that sent the 'lcb-delete-me' event.
+     *
+     * @param idx {number}
+     * @private
+     */
+    lcbDelete: function (idx) {
+      this.splice(this.lcbItemsName, idx, 1);
+    },
+
+    /**
+     * Delete the item that sent the 'lcb-delete-me' event.
+     *
+     * @param evt {object}
+     * @private
+     */
+    _lcbDeleteMe: function (evt) {
+      if (evt && evt.model && _.isNumber(evt.model.index)) {
+        this.lcbDelete(evt.model.index);
+      }
+    },
+
+    /**
+     * Set to true, or toggle, the boolean 'lcbTrashed' property of the item that sent the 'lcb-trash-me' event.
+     *
+     * @param evt {object}
+     * @private
+     */
+    _lcbTrashMe: function (evt) {
+      if (evt && evt.model && evt.model.item) {
+        evt.model.set('item.lcbTrashed', _.isBoolean(evt.model.item.lcbTrashed) ? !evt.model.item.lcbTrashed : true);
+      }
+    },
+    /**
+     * Delete all trashed items.
+     */
+    lcbEmptyTrash: function () {
+      var _this = this;
+      _.forEachRight(this[this.lcbItemsName], function (item, idx) {
+        if(item.lcbTrashed) {
+          _this.lcbDelete(idx);
+        }
+      });
+    },
+
+    lcbLogItems: function () {
       this._fireLog(this.lcbItemsName + ':', this[this.lcbItemsName]);
     }
-
 
   };
   LeisureLinkBehaviors.CollectionBehavior = [LeisureLinkBehaviors.FireLogBehavior, LeisureLinkBehaviors.CollectionBehaviorImpl]

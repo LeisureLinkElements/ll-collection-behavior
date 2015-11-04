@@ -2,15 +2,27 @@
 
 <dom-module id="demo-item">
   <template>
-    <label for="firstName">First Name</label><input id="firstName" value="{{item.firstName::input}}"/>
-    <label for="lastName">Last Name</label><input id="lastName" value="{{item.lastName::input}}"/>
+    <button on-click="delete">DEL</button>
+    &nbsp;
+    <button on-click="trash">TRASH</button>
+    <label for="firstName">First Name: </label><input id="firstName" value="{{item.firstName::input}}"/>
+    <label for="lastName">Last Name: </label><input id="lastName" value="{{item.lastName::input}}"/>
   </template>
 </dom-module>
 
 <script>
   DemoItem = Polymer({
 
-    is: 'demo-item'
+    is: 'demo-item',
+
+    delete: function (evt) {
+      console.log('delete evt:',evt);
+      this.fire('lcb-delete-me', {model:evt.model});
+    },
+
+    trash: function (evt) {
+      this.fire('lcb-trash-me', evt);
+    }
 
   });
 </script>

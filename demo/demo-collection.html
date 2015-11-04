@@ -4,7 +4,13 @@
 <dom-module id="demo-collection">
   <template>
     <template is="dom-repeat" items="{{employees}}">
-      <demo-item item="{{item}}" index="[[index]]"></demo-item>
+      <div class="employee">
+        <button on-click="_lcbDeleteMe">DEL</button>
+        &nbsp;
+        <button on-click="_lcbTrashMe">TRASH</button>
+        <label for="firstName">First Name: </label><input id="firstName" value="{{item.firstName::input}}"/>
+        <label for="lastName">Last Name: </label><input id="lastName" value="{{item.lastName::input}}"/>
+      </div>
     </template>
   </template>
 </dom-module>
@@ -23,11 +29,6 @@
         value: function () {
           return [];
         }
-      },
-
-      lcbItemsName: {
-        type: String,
-        value: 'employees'
       }
 
     }
