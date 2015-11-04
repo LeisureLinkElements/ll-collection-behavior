@@ -18,6 +18,11 @@
       margin:10px 0;
     }
 
+    .trashed {
+      background-color:darkgray;
+      opacity:.5;
+    }
+
     paper-button {
       margin: 0 20px 0 0;
       text-transform: none;
@@ -67,7 +72,7 @@
 
 <paper-button class="colorful" raised onClick="emptyTrash()">Empty Trash</paper-button>
 
-<demo-collection id="someDemoItems" lcb-items-name="employees" fire-log/>
+<demo-collection id="someDemoItems" lcb-items-name="employees" lcb-trashed-class="trashed" fire-log/>
 
 <script>
   var myEl = document.getElementById('someDemoItems');

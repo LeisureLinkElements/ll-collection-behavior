@@ -24,7 +24,15 @@
       /**
        * Name of the property containing the items for this collection; eg: 'employees'
        */
-      lcbItemsName: String
+      lcbItemsName: String,
+
+      /**
+       * HTML class name to add to trashed items.
+       */
+      lcbTrashedClass: {
+        type: String,
+        value: 'lcb-trashed'
+      }
 
     },
 
@@ -71,7 +79,9 @@
      */
     _lcbTrashMe: function (evt) {
       if (evt && evt.model && evt.model.item) {
-        evt.model.set('item.lcbTrashed', _.isBoolean(evt.model.item.lcbTrashed) ? !evt.model.item.lcbTrashed : true);
+        var trashed = _.isBoolean(evt.model.item.lcbTrashed) ? !evt.model.item.lcbTrashed : true;
+        evt.model.set('item.lcbTrashed', trashed);
+        Polymer.dom(evt.target).parentNode.classList.toggle(this.lcbTrashedClass, trashed);
       }
     },
     /**
