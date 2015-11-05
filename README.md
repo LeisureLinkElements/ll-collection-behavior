@@ -2,10 +2,29 @@
 
 Generic collection UI for any type of Polymer element as item.
 
-Features:
+## Summary
 
-- **feature 1:** featuristic.
+Adds collection-management functionality to an element with a repeating template.
 
+## Features:
+
+- **Add item** with optional data
+- **Delete item** by index, or when item fires event
+- **Trash / un-trash item** when item fires event
+- **Empty trash**
+
+## Usage
+
+1. Add this behavior to an element with a dom-repeat template.
+1. Add a 'lcb-items-name' property to the element.
+1. Set the value to the name of the property to which the dom-repeat items are bound.
+1. Optionally add a delete button to each item by adding it within the dom-repeat template. Example:
+
+        <button on-click="_lcbDeleteMe">DELETE THIS ITEM</button>
+1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
+
+        <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
+1. Empty the trash by calling lcbEmptyTrash().
 
 ## Dependencies
 

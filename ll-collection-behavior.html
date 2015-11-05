@@ -12,6 +12,13 @@
    *
    * Adds collection-management functionality to an element with a repeating template.
    *
+   * ### Features:
+
+   * - Add item with optional data
+   * - Delete item by index, or when item fires event
+   * - Trash / un-trash item when item fires event
+   * - Empty trash
+   *
    * ### Usage
    *
    * 1. Add this behavior to an element with a dom-repeat template.
@@ -22,7 +29,6 @@
    * 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
    *        <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
    * 1. Empty the trash by calling lcbEmptyTrash().
-   *
    *
    * @demo
    * @polymerBehavior
