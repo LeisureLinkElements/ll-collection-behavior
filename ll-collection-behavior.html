@@ -98,7 +98,7 @@
     lcbEmptyTrash: function () {
       var _this = this;
       _.forEachRight(this[this.lcbItemsName], function (item, idx) {
-        if(item.lcbTrashed) {
+        if (item.lcbTrashed) {
           _this.lcbDelete(idx);
         }
       });
