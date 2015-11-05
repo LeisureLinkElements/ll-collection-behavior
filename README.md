@@ -1,9 +1,5 @@
 # ll-collection
 
-Generic collection UI for any type of Polymer element as item.
-
-## Summary
-
 Adds collection-management functionality to an element with a repeating template.
 
 ## Features:
