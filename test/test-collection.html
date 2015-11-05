@@ -1,0 +1,36 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../ll-collection-behavior.html">
+
+<dom-module id="test-collection">
+  <template>
+    <template is="dom-repeat" items="{{employees}}">
+      <button class="deleteButton" on-click="_lcbDeleteMe">DEL</button>
+      &nbsp;
+      <button class="trashButton" on-click="_lcbTrashMe">TRASH / UN-TRASH</button>
+      <label for="firstName">First Name: </label><input id="firstName" value="{{item.firstName::input}}"/>
+      <label for="lastName">Last Name: </label><input id="lastName" value="{{item.lastName::input}}"/>
+      </div>
+    </template>
+  </template>
+</dom-module>
+
+<script>
+  TestCollection = Polymer({
+
+    is: 'test-collection',
+
+    behaviors: [LeisureLinkBehaviors.CollectionBehavior],
+
+    properties: {
+
+      employees: {
+        type: Array,
+        value: function () {
+          return [];
+        }
+      }
+
+    }
+
+  });
+</script>

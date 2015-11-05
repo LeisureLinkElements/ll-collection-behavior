@@ -9,27 +9,121 @@
   <script src="../../web-component-tester/browser.js"></script>
 
   <!-- Step 1: import the element to test -->
-  <link rel="import" href="../ll-collection-behavior.html">
-  <link rel="import" href="test-item.html">
+  <link rel="import" href="test-collection.html">
 </head>
 <body>
 
-<ll-collection id="myCollection">
-  <test-item/>
-</ll-collection>
-
 <script>
-  var myEl = document.getElementById('myCollection');
-  myEl.items = [
-    {
-      info: 'nice day',
-      lastName: 'Simon'
-    },
-    {
-      info: 'hello there',
-      lastName: 'Jansen'
-    }
-  ];
+
+  function getPreparedElement() {
+    var myEl = new TestCollection();
+    myEl.lcbItemsName = 'employees'
+    myEl.employees = [
+      {
+        firstName: 'Grover',
+        lastName: 'Cleveland'
+      },
+      {
+        firstName: 'Bill',
+        lastName: 'Nigh'
+      },
+      {
+        firstName: 'Jon',
+        lastName: 'Jones'
+      },
+      {
+        firstName: 'Sally',
+        lastName: 'Kellerman'
+      },
+      {
+        firstName: 'Bob',
+        lastName: 'Guccione'
+      }
+    ];
+    return myEl;
+  }
+
+  describe('when an element with this behavior contains a repeating template whose items are bound to a property whose name equals the value of the lcbItemsName property declared by this behavior', function () {
+
+    describe('direct manipulation of collection', function() {
+      var myEl = getPreparedElement();
+      document.body.appendChild(myEl);
+
+      it('should get an item by index', function () {
+        var item = myEl.lcbGetItemByIndex(3);
+        expect(item.lastName).to.eql('Kellerman');
+      });
+
+      it('should add an item', function () {
+        myEl.lcbAdd({
+          firstName: 'Testing',
+          lastName: 'Maniac'
+        });
+        expect(myEl.employees.length).to.eql(6);
+        expect(myEl.employees[5].lastName).to.eql('Maniac');
+      });
+
+      it('should delete an item by index', function () {
+        myEl.lcbDelete(2);
+        expect(myEl.employees.length).to.eql(5);
+        expect(myEl.employees[2].firstName).to.eql('Sally');
+      });
+    });
+
+    describe('item self-deletion', function() {
+
+      var myEl = getPreparedElement();
+      document.body.appendChild(myEl);
+
+      it('should delete an item that fires an event', function (done) {
+        myEl.addEventListener('lcb-deleted', function (evt) {
+          expect(evt.detail.firstName).to.eql('Grover');
+          expect(myEl.employees.length).to.eql(4);
+          expect(myEl.employees[0].firstName).to.eql('Bill');
+          done();
+        });
+        myEl.$$('.deleteButton').click();
+      });
+    });
+
+    describe('item self-trashing', function() {
+
+      var myEl = getPreparedElement();
+      document.body.appendChild(myEl);
+      var trashButtons = Polymer.dom(myEl).querySelectorAll('.trashButton');
+
+      it('should mark an item as trashed when the item fires an event', function (done) {
+        var lis = function (evt) {
+          myEl.removeEventListener('lcb-trashed', lis);
+          expect(evt.detail.firstName).to.eql('Grover');
+          expect(evt.detail.lcbTrashed).to.be.true;
+          done();
+        };
+        myEl.addEventListener('lcb-trashed', lis);
+        myEl.$$('.trashButton').click();
+      });
+
+      it('should mark another item as trashed when the item fires an event', function (done) {
+        var lis = function (evt) {
+          myEl.removeEventListener('lcb-trashed', lis);
+          expect(evt.detail.firstName).to.eql('Bill');
+          expect(evt.detail.lcbTrashed).to.be.true;
+          done();
+        };
+        myEl.addEventListener('lcb-trashed', lis);
+        var trashButtons = Polymer.dom(myEl.root).querySelectorAll('.trashButton');
+        trashButtons[1].click();
+      });
+
+      it('should empty trash by deleting all items marked as trashed', function () {
+        myEl.lcbEmptyTrash();
+        expect(myEl.employees.length).to.eql(3);
+        expect(myEl.employees[0].lastName).to.eql('Jones');
+      });
+
+    });
+
+  });
 </script>
 
 </body>
