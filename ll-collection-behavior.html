@@ -48,14 +48,15 @@
     },
 
     /**
-     * Delete the item that sent the 'lcb-delete-me' event.
+     * Delete an item by index.
      *
      * @param idx {number}
-     * @private
      */
     lcbDelete: function (idx) {
-      this.splice(this.lcbItemsName, idx, 1);
       if (this._isValidIndex(idx)) {
+        var deletedItem = _.cloneDeep(this.lcbGetItemByIndex(idx));
+        this.splice(this.lcbItemsName, idx, 1);
+        this._fireLogFire('lcb-deleted', deletedItem);
       }
     },
 
@@ -81,7 +82,7 @@
       if (evt && evt.model && evt.model.item) {
         var trashed = _.isBoolean(evt.model.item.lcbTrashed) ? !evt.model.item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
-        Polymer.dom(evt.target).parentNode.classList.toggle(this.lcbTrashedClass, trashed);
+        this._fireLogFire('lcb-trashed', evt.model.item);
       }
     },
     /**
