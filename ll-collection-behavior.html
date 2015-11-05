@@ -63,6 +63,8 @@
      */
     lcbDelete: function (idx) {
       this.splice(this.lcbItemsName, idx, 1);
+      if (this._isValidIndex(idx)) {
+      }
     },
 
     /**
@@ -100,6 +102,10 @@
           _this.lcbDelete(idx);
         }
       });
+    },
+
+    _isValidIndex: function (idx) {
+      return _.isNumber(idx) && _.inRange(idx, this[this.lcbItemsName].length - 1);
     },
 
     lcbLogItems: function () {
