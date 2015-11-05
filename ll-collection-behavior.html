@@ -41,6 +41,12 @@
       'lcb-delete-me': '_lcbDeleteMe'
     },
 
+    lcbGetItemByIndex: function (idx) {
+      if (this._isValidIndex(idx)) {
+        return this[this.lcbItemsName][idx];
+      }
+    },
+
     /**
      * Add item to collection
      * @param data {object} Optional data for new item.
