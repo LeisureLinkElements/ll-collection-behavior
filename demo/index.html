@@ -14,14 +14,14 @@
   <style>
 
     .employee {
-      display:block;
-      margin:10px 0;
-      padding:5px;
+      display: block;
+      margin: 10px 0;
+      padding: 5px;
     }
 
     .trashed {
-      background-color:darkgray;
-      opacity:.5;
+      background-color: darkgray;
+      opacity: .5;
     }
 
     paper-button {
@@ -73,7 +73,7 @@
 
 <paper-button class="colorful" raised onClick="emptyTrash()">Empty Trash</paper-button>
 
-<demo-collection id="someDemoItems" lcb-items-name="employees" lcb-trashed-class="trashed" fire-log/>
+<demo-collection id="someDemoItems" lcb-items-name="employees" fire-log/>
 
 <script>
   var myEl = document.getElementById('someDemoItems');

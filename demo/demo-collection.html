@@ -4,7 +4,7 @@
 <dom-module id="demo-collection">
   <template>
     <template is="dom-repeat" items="{{employees}}">
-      <div class="employee">
+      <div class$="[[_computeEmployeeClass(item.lcbTrashed)]]">
         <button on-click="_lcbDeleteMe">DEL</button>
         &nbsp;
         <button on-click="_lcbTrashMe">TRASH / UN-TRASH</button>
@@ -31,6 +31,10 @@
         }
       }
 
+    },
+
+    _computeEmployeeClass: function(trashed) {
+      return 'employee' + (trashed ? ' trashed' : '');
     }
 
   });
