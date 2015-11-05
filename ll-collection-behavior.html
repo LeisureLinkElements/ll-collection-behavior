@@ -102,9 +102,10 @@
      */
     _lcbTrashMe: function (evt) {
       if (evt && evt.model && evt.model.item) {
-        var trashed = _.isBoolean(evt.model.item.lcbTrashed) ? !evt.model.item.lcbTrashed : true;
+        var item = evt.model.item;
+        var trashed = _.isBoolean(item.lcbTrashed) ? !item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
-        this._fireLogFire('lcb-trashed', evt.model.item);
+        this._fireLogFire('lcb-trashed', _.cloneDeep(item));
       }
     },
     /**
