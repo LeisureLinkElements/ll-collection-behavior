@@ -10,8 +10,18 @@
   /**
    * ### Summary
    *
+   * Adds collection-management functionality to an element with a repeating template.
    *
    * ### Usage
+   *
+   * 1. Add this behavior to an element with a dom-repeat template.
+   * 1. Add a 'lcb-items-name' property to the element.
+   * 1. Set the value to the name of the property to which the dom-repeat items are bound.
+   * 1. Optionally add a delete button to each item by adding it within the dom-repeat template. Example:
+   *        <button on-click="_lcbDeleteMe">DELETE THIS ITEM</button>
+   * 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
+   *        <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
+   * 1. Empty the trash by calling lcbEmptyTrash().
    *
    *
    * @demo
@@ -33,6 +43,11 @@
       'lcb-delete-me': '_lcbDeleteMe'
     },
 
+    /**
+     * Get an item by index.
+     *
+     * @param idx {number}
+     */
     lcbGetItemByIndex: function (idx) {
       if (this._isValidIndex(idx)) {
         return this[this.lcbItemsName][idx];
@@ -40,7 +55,8 @@
     },
 
     /**
-     * Add item to collection
+     * Add item to collection.
+     *
      * @param data {object} Optional data for new item.
      */
     lcbAdd: function (data) {
