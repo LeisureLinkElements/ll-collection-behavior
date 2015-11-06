@@ -7,6 +7,7 @@ Adds collection-management functionality to an element with a repeating template
 - **Add item** with optional data
 - **Delete item** by index, or when item fires event
 - **Trash / un-trash item** when item fires event
+- **Toggles HTML class 'lcb-trashed'** on the item's element.
 - **Empty trash**
 
 ## Usage
@@ -21,6 +22,7 @@ Adds collection-management functionality to an element with a repeating template
 
         <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
 1. Empty the trash by calling lcbEmptyTrash().
+1. Optionally define the 'lcb-trashed' class in the element's dom module to indicate which items are trashed.
 
 ## Dependencies
 

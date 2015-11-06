@@ -2,9 +2,21 @@
 <link rel="import" href="../ll-collection-behavior.html">
 
 <dom-module id="demo-collection">
+  <style>
+    .employee {
+      display: block;
+      margin: 10px 0;
+      padding: 5px;
+    }
+
+    .lcb-trashed {
+      background-color: darkgray;
+      opacity: .5;
+    }
+  </style>
   <template>
     <template is="dom-repeat" items="{{employees}}">
-      <div class$="[[_computeEmployeeClass(item.lcbTrashed)]]">
+      <div class="employee">
         <button on-click="_lcbDeleteMe">DEL</button>
         &nbsp;
         <button on-click="_lcbTrashMe">TRASH / UN-TRASH</button>
@@ -31,10 +43,6 @@
         }
       }
 
-    },
-
-    _computeEmployeeClass: function(trashed) {
-      return 'employee' + (trashed ? ' trashed' : '');
     }
 
   });

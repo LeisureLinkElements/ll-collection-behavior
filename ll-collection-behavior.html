@@ -16,7 +16,8 @@
 
    * - Add item with optional data
    * - Delete item by index, or when item fires event
-   * - Trash / un-trash item when item fires event
+   * - Trash / un-trash item when item fires event.
+   * - Toggles HTML class 'lcb-trashed' on the item's element.
    * - Empty trash
    *
    * ### Usage
@@ -29,6 +30,7 @@
    * 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
    *        <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
    * 1. Empty the trash by calling lcbEmptyTrash().
+   * 1. Optionally define the 'lcb-trashed' class in the element's dom module to style trashed items.
    *
    * @demo
    * @polymerBehavior
@@ -105,7 +107,7 @@
         var item = evt.model.item;
         var trashed = _.isBoolean(item.lcbTrashed) ? !item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
-        this._fireLogFire('lcb-trashed', _.cloneDeep(item));
+        this.toggleClass('lcb-trashed', trashed, evt.model._rootDataHost.children[evt.model.index]);
       }
     },
     /**
