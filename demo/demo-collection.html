@@ -17,9 +17,9 @@
   <template>
     <template is="dom-repeat" items="{{employees}}">
       <div class="employee">
-        <button on-click="_lcbDeleteMe">DEL</button>
+        <button on-tap="_lcbDeleteMe">DEL</button>
         &nbsp;
-        <button on-click="_lcbTrashMe">TRASH / UN-TRASH</button>
+        <button on-tap="_lcbTrashMe">TRASH / UN-TRASH</button>
         <label for="firstName">First Name: </label><input id="firstName" value="{{item.firstName::input}}"/>
         <label for="lastName">Last Name: </label><input id="lastName" value="{{item.lastName::input}}"/>
       </div>
