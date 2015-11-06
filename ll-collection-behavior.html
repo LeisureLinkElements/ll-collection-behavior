@@ -66,7 +66,7 @@
      * @param data {object} Optional data for new item.
      */
     lcbAdd: function (data) {
-      this.push(this.lcbItemsName, data || {});
+      this.push(this.lcbItemsName, _.isPlainObject(data) ? data : {});
     },
 
     /**
