@@ -16,7 +16,8 @@
 
    * - Add item with optional data
    * - Delete item by index, or when item fires event
-   * - Trash / un-trash item when item fires event
+   * - Trash / un-trash item when item fires event.
+   * - Toggles HTML class 'lcb-trashed' on the item's element.
    * - Empty trash
    *
    * ### Usage
@@ -25,10 +26,11 @@
    * 1. Add a 'lcb-items-name' property to the element.
    * 1. Set the value to the name of the property to which the dom-repeat items are bound.
    * 1. Optionally add a delete button to each item by adding it within the dom-repeat template. Example:
-   *        <button on-click="_lcbDeleteMe">DELETE THIS ITEM</button>
+   *        <button on-tap="_lcbDeleteMe">DELETE THIS ITEM</button>
    * 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
-   *        <button on-click="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
+   *        <button on-tap="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
    * 1. Empty the trash by calling lcbEmptyTrash().
+   * 1. Optionally define the 'lcb-trashed' class in the element's dom module to style trashed items.
    *
    * @demo
    * @polymerBehavior
@@ -66,7 +68,10 @@
      * @param data {object} Optional data for new item.
      */
     lcbAdd: function (data) {
-      this.push(this.lcbItemsName, data || {});
+      if(!_.isArray(this[this.lcbItemsName])) {
+        this[this.lcbItemsName] = new Array();
+      }
+      this.push(this.lcbItemsName, _.isPlainObject(data) ? data : {});
     },
 
     /**
@@ -105,6 +110,7 @@
         var item = evt.model.item;
         var trashed = _.isBoolean(item.lcbTrashed) ? !item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
+        this.toggleClass('lcb-trashed', trashed, evt.model._rootDataHost.children[evt.model.index]);
         this._fireLogFire('lcb-trashed', _.cloneDeep(item));
       }
     },
