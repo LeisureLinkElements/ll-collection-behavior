@@ -22,9 +22,17 @@
    *
    * ### Usage
    *
-   * 1. Add this behavior to an element with a dom-repeat template.
-   * 1. Add a 'lcb-items-name' property to the element.
-   * 1. Set the value to the name of the property to which the dom-repeat items are bound.
+   * 1. Add this behavior to an element with a dom-repeat template. Example: Add the behavior to <my-collection-container> below.
+   * 1. Add the 'lcb-items-name' attribute to the element.  Set its value to the name of the property to which the dom-repeat items are bound. Example:
+   *        <my-collection-container lcb-items-name="employees">
+   *          <template>
+   *            <template is="dom-repeat" items="{{employees}}">
+   *              <div>
+   *                <label>Name:</label><input type="text" value="{{item.name}}"/>
+   *              </div>
+   *            </template>
+   *          </template>
+   *        </my-collection-container>
    * 1. Optionally add a delete button to each item by adding it within the dom-repeat template. Example:
    *        <button on-tap="_lcbDeleteMe">DELETE THIS ITEM</button>
    * 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
@@ -130,6 +138,9 @@
       return _.isNumber(idx) && _.inRange(idx, this[this.lcbItemsName].length);
     },
 
+    /**
+     * Log items array to console. (fire-log attribute must be set on element.)
+     */
     lcbLogItems: function () {
       this._fireLog(this.lcbItemsName + ':', this[this.lcbItemsName]);
     }
