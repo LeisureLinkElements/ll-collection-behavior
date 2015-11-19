@@ -97,7 +97,7 @@
      * @param data {object} Optional data for new item.
      */
     lcbAdd: function (data) {
-      if(!_.isArray(this[this.lcbItemsName])) {
+      if (!_.isArray(this[this.lcbItemsName])) {
         this[this.lcbItemsName] = new Array();
       }
       this.push(this.lcbItemsName, _.isPlainObject(data) ? data : {});
