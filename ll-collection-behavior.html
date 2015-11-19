@@ -156,7 +156,10 @@
     },
 
     lcbDeleteEmpties: function () {
-      this.lcbDeleteItems(this.lcbIsEmptyItem);
+      var _this = this;
+      this.lcbDeleteItems(function(item){
+        return _this.lcbIsEmptyItem(item);
+      });
     },
 
     /**
