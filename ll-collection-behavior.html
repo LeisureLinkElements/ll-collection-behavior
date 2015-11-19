@@ -177,16 +177,37 @@
     },
 
     /**
-     * Returns true if each value of item is empty.
+     * Return true if item is empty or item is object and each value is empty.
      *
-     * @param item {object}
+     * @param {object} item
+     *
+     * @returns {boolean}
      */
-    lcbIsEmptyItem: function(item) {
-      return !_.find(_.values(item), function (val) {
-        return !_.isEmpty(val);
-      });
+    lcbIsEmptyItem: function (item) {
+      var _this = this;
+      return _this.lcbIsEmptyVal(item) || !_.find(_.values(item), function (val) {
+            return !_this.lcbIsEmptyVal(val);
+          });
     },
 
+    /**
+     * Return true if trimmed value is empty.
+     *
+     * @param {*} val
+     *
+     * @returns {boolean}
+     */
+    lcbIsEmptyVal: function (val) {
+      return _.isEmpty(_.trim(val));
+    },
+
+    /**
+     * Return true if number is valid index of items.
+     *
+     * @param {number} idx
+     *
+     * @returns {boolean}
+     */
     _isValidIndex: function (idx) {
       return _.isNumber(idx) && _.inRange(idx, this[this.lcbItemsName].length);
     },
