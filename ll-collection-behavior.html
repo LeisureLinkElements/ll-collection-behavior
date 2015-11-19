@@ -185,8 +185,8 @@
      */
     lcbIsEmptyItem: function (item) {
       var _this = this;
-      return _this.lcbIsEmptyVal(item) || !_.find(_.values(item), function (val) {
-            return !_this.lcbIsEmptyVal(val);
+      return this.lcbIsEmptyValue(item) || !_.find(_.values(item), function (val) {
+            return !_this.lcbIsEmptyValue(val);
           });
     },
 
@@ -197,7 +197,7 @@
      *
      * @returns {boolean}
      */
-    lcbIsEmptyVal: function (val) {
+    lcbIsEmptyValue: function (val) {
       return _.isEmpty(_.trim(val));
     },
 
