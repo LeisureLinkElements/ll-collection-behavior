@@ -13,12 +13,13 @@
    * Adds collection-management functionality to an element with a repeating template.
    *
    * ### Features:
-
-   * - Add item with optional data
-   * - Delete item by index, or when item fires event
+   *
+   * - Add item with optional data.
+   * - Delete item by index, or when item fires event.
+   * - Delete all empty items.
    * - Trash / un-trash item when item fires event.
    * - Toggles HTML class 'lcb-trashed' on the item's element.
-   * - Empty trash
+   * - Empty trash.
    *
    * ### Usage
    *
@@ -56,9 +57,10 @@
    *
    * 1. Optional: Add a delete button to each item by adding it within the dom-repeat template. Example:
    *        <button on-tap="_lcbDeleteMe">DELETE THIS ITEM</button>
+   * 1. Delete empty items by calling lcbDeleteEmpties(). An item is considered empty if it is an empty object or each value of the object is empty.
    * 1. Optional: Add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
    *        <button on-tap="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
-   * 1. Empty the trash by calling lcbEmptyTrash().
+   * 1. Delete trashed items by calling lcbEmptyTrash().
    * 1. Optionally define the 'lcb-trashed' class in the element's dom module to style trashed items.
    *
    * @demo
