@@ -85,7 +85,8 @@
     /**
      * Get an item by index.
      *
-     * @param idx {number}
+     * @param {number} idx
+     * @returns {object}
      */
     lcbGetItemByIndex: function (idx) {
       if (this._isValidIndex(idx)) {
@@ -96,7 +97,7 @@
     /**
      * Add item to collection.
      *
-     * @param data {object} Optional data for new item.
+     * @param {object} data Optional data for new item.
      */
     lcbAdd: function (data) {
       if (!_.isArray(this[this.lcbItemsName])) {
@@ -108,7 +109,7 @@
     /**
      * Delete an item by index.
      *
-     * @param idx {number}
+     * @param {number}
      */
     lcbDelete: function (idx) {
       if (this._isValidIndex(idx)) {
@@ -121,7 +122,7 @@
     /**
      * Delete the item that sent the 'lcb-delete-me' event.
      *
-     * @param evt {object}
+     * @param {object} evt
      * @private
      */
     _lcbDeleteMe: function (evt) {
@@ -133,7 +134,7 @@
     /**
      * Set to true, or toggle, the boolean 'lcbTrashed' property of the item that sent the 'lcb-trash-me' event.
      *
-     * @param evt {object}
+     * @param {object} evt
      * @private
      */
     _lcbTrashMe: function (evt) {
@@ -162,7 +163,7 @@
      * Delete all items that the supplied deleteCheckFunc function returns true for.
      * deleteCheckFunc takes 2 arguments: item and idx (the index of the item)
      *
-     * @param deleteCheckFunc {function}
+     * @param {function} deleteCheckFunc
      */
     lcbDeleteItems: function (deleteCheckFunc) {
       if (_.isFunction(deleteCheckFunc)) {
