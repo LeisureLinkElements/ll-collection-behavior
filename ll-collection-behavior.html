@@ -147,11 +147,40 @@
      * Delete all trashed items.
      */
     lcbEmptyTrash: function () {
-      var _this = this;
-      _.forEachRight(this[this.lcbItemsName], function (item, idx) {
-        if (item.lcbTrashed) {
-          _this.lcbDelete(idx);
-        }
+      this.lcbDeleteItems(function (item) {
+        return item.lcbTrashed;
+      });
+    },
+
+    lcbDeleteEmpties: function () {
+      this.lcbDeleteItems(this.lcbIsEmptyItem);
+    },
+
+    /**
+     * Delete all items that the supplied deleteCheckFunc function returns true for.
+     * deleteCheckFunc takes 2 arguments: item and idx (the index of the item)
+     *
+     * @param deleteCheckFunc {function}
+     */
+    lcbDeleteItems: function (deleteCheckFunc) {
+      if (_.isFunction(deleteCheckFunc)) {
+        var _this = this;
+        _.forEachRight(this[this.lcbItemsName], function (item, idx) {
+          if (deleteCheckFunc(item, idx)) {
+            _this.lcbDelete(idx);
+          }
+        });
+      }
+    },
+
+    /**
+     * Returns true if each value of item is empty.
+     *
+     * @param item {object}
+     */
+    lcbIsEmptyItem: function(item) {
+      return !_.find(_.values(item), function (val) {
+        return !_.isEmpty(val);
       });
     },
 
