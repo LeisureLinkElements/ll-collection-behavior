@@ -142,7 +142,9 @@
         var item = evt.model.item;
         var trashed = _.isBoolean(item.lcbTrashed) ? !item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
-        this.toggleClass('lcb-trashed', trashed, evt.model._rootDataHost.children[evt.model.index]);
+        if (evt.model._nodes && evt.model._nodes[0] && evt.model._nodes[0].parentNode) {
+          this.toggleClass('lcb-trashed', trashed, evt.model._nodes[0].parentNode);
+        }
         this._fireLogFire('lcb-trashed', _.cloneDeep(item));
       }
     },
