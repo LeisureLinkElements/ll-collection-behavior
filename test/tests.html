@@ -38,6 +38,11 @@
       {
         firstName: 'Bob',
         lastName: 'Guccione'
+      },
+      {},
+      {
+        firstName: '',
+        lastName: ''
       }
     ];
     return myEl;
@@ -59,13 +64,13 @@
           firstName: 'Testing',
           lastName: 'Maniac'
         });
-        expect(myEl.employees.length).to.eql(6);
-        expect(myEl.employees[5].lastName).to.eql('Maniac');
+        expect(myEl.employees.length).to.eql(8);
+        expect(myEl.employees[7].lastName).to.eql('Maniac');
       });
 
       it('should delete an item by index', function () {
         myEl.lcbDelete(2);
-        expect(myEl.employees.length).to.eql(5);
+        expect(myEl.employees.length).to.eql(7);
         expect(myEl.employees[2].firstName).to.eql('Sally');
       });
     });
@@ -78,7 +83,7 @@
       it('should delete an item that fires an event', function (done) {
         myEl.addEventListener('lcb-deleted', function (evt) {
           expect(evt.detail.firstName).to.eql('Grover');
-          expect(myEl.employees.length).to.eql(4);
+          expect(myEl.employees.length).to.eql(6);
           expect(myEl.employees[0].firstName).to.eql('Bill');
           done();
         });
@@ -86,39 +91,62 @@
       });
     });
 
-    describe('item self-trashing', function() {
+    describe('deleting empty items', function() {
+
+      var myEl = getPreparedElement();
+      document.body.appendChild(myEl);
+
+      it('should determine whether a value is empty', function () {
+        expect(myEl.lcbIsEmptyValue()).to.be.true;
+        expect(myEl.lcbIsEmptyValue(' ')).to.be.true;
+        expect(myEl.lcbIsEmptyValue('hello')).to.be.false;
+      });
+
+      it('should determine whether an item is empty', function () {
+        expect(myEl.lcbIsEmptyItem()).to.be.true;
+        expect(myEl.lcbIsEmptyItem({})).to.be.true;
+        expect(myEl.lcbIsEmptyItem({first:'', last:''})).to.be.true;
+        expect(myEl.lcbIsEmptyItem({first:'', last:''})).to.be.true;
+      });
+
+      it('should delete all empty items', function () {
+        myEl.lcbDeleteEmpties();
+        expect(myEl.employees.length).to.eql(5);
+      });
+
+    });
+
+    describe('trash', function() {
 
       var myEl = getPreparedElement();
       document.body.appendChild(myEl);
       var trashButtons = Polymer.dom(myEl).querySelectorAll('.trashButton');
 
-      it('should mark an item as trashed when the item fires an event', function (done) {
-        var lis = function (evt) {
-          myEl.removeEventListener('lcb-trashed', lis);
-          expect(evt.detail.firstName).to.eql('Grover');
-          expect(evt.detail.lcbTrashed).to.be.true;
-          done();
-        };
-        myEl.addEventListener('lcb-trashed', lis);
-        myEl.$$('.trashButton').click();
-      });
+      describe('item self-trashing', function() {
 
-      it('should mark another item as trashed when the item fires an event', function (done) {
-        var lis = function (evt) {
-          myEl.removeEventListener('lcb-trashed', lis);
-          expect(evt.detail.firstName).to.eql('Bill');
-          expect(evt.detail.lcbTrashed).to.be.true;
-          done();
-        };
-        myEl.addEventListener('lcb-trashed', lis);
-        var trashButtons = Polymer.dom(myEl.root).querySelectorAll('.trashButton');
-        trashButtons[1].click();
-      });
+        it('should mark an item as trashed when the item fires an event', function (done) {
+          var lis = function (evt) {
+            myEl.removeEventListener('lcb-trashed', lis);
+            expect(evt.detail.firstName).to.eql('Grover');
+            expect(evt.detail.lcbTrashed).to.be.true;
+            done();
+          };
+          myEl.addEventListener('lcb-trashed', lis);
+          myEl.$$('.trashButton').click();
+        });
 
-      it('should empty trash by deleting all items marked as trashed', function () {
-        myEl.lcbEmptyTrash();
-        expect(myEl.employees.length).to.eql(3);
-        expect(myEl.employees[0].lastName).to.eql('Jones');
+        it('should mark another item as trashed when the item fires an event', function (done) {
+          var lis = function (evt) {
+            myEl.removeEventListener('lcb-trashed', lis);
+            expect(evt.detail.firstName).to.eql('Bill');
+            expect(evt.detail.lcbTrashed).to.be.true;
+            done();
+          };
+          myEl.addEventListener('lcb-trashed', lis);
+          var trashButtons = Polymer.dom(myEl.root).querySelectorAll('.trashButton');
+          trashButtons[1].click();
+        });
+
       });
 
     });

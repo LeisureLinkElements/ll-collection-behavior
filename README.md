@@ -21,7 +21,8 @@ Adds collection-management functionality to an element with a repeating template
 1. Optionally add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
 
         <button on-tap="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
-1. Empty the trash by calling lcbEmptyTrash().
+1. Delete trashed items by calling lcbEmptyTrash().
+1. Delete empty items by calling lcbDeleteEmpties(). An item is considered empty if it is an empty object or each value of the object is empty.
 1. Optionally define the 'lcb-trashed' class in the element's dom module to indicate which items are trashed.
 
 ## Dependencies

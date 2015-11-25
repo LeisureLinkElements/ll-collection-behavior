@@ -13,12 +13,13 @@
    * Adds collection-management functionality to an element with a repeating template.
    *
    * ### Features:
-
-   * - Add item with optional data
-   * - Delete item by index, or when item fires event
+   *
+   * - Add item with optional data.
+   * - Delete item by index, or when item fires event.
+   * - Delete all empty items.
    * - Trash / un-trash item when item fires event.
    * - Toggles HTML class 'lcb-trashed' on the item's element.
-   * - Empty trash
+   * - Empty trash.
    *
    * ### Usage
    *
@@ -56,9 +57,10 @@
    *
    * 1. Optional: Add a delete button to each item by adding it within the dom-repeat template. Example:
    *        <button on-tap="_lcbDeleteMe">DELETE THIS ITEM</button>
+   * 1. Delete empty items by calling lcbDeleteEmpties(). An item is considered empty if it is an empty object or each value of the object is empty.
    * 1. Optional: Add trash/un-trash button. (The _lcbTrashMe method toggles trashing.) Example:
    *        <button on-tap="_lcbTrashMe">TRASH / UNTRASH THIS ITEM</button>
-   * 1. Empty the trash by calling lcbEmptyTrash().
+   * 1. Delete trashed items by calling lcbEmptyTrash().
    * 1. Optionally define the 'lcb-trashed' class in the element's dom module to style trashed items.
    *
    * @demo
@@ -83,7 +85,8 @@
     /**
      * Get an item by index.
      *
-     * @param idx {number}
+     * @param {number} idx
+     * @returns {object}
      */
     lcbGetItemByIndex: function (idx) {
       if (this._isValidIndex(idx)) {
@@ -94,10 +97,10 @@
     /**
      * Add item to collection.
      *
-     * @param data {object} Optional data for new item.
+     * @param {object} data Optional data for new item.
      */
     lcbAdd: function (data) {
-      if(!_.isArray(this[this.lcbItemsName])) {
+      if (!_.isArray(this[this.lcbItemsName])) {
         this[this.lcbItemsName] = new Array();
       }
       this.push(this.lcbItemsName, _.isPlainObject(data) ? data : {});
@@ -106,7 +109,7 @@
     /**
      * Delete an item by index.
      *
-     * @param idx {number}
+     * @param {number}
      */
     lcbDelete: function (idx) {
       if (this._isValidIndex(idx)) {
@@ -119,7 +122,7 @@
     /**
      * Delete the item that sent the 'lcb-delete-me' event.
      *
-     * @param evt {object}
+     * @param {object} evt
      * @private
      */
     _lcbDeleteMe: function (evt) {
@@ -131,7 +134,7 @@
     /**
      * Set to true, or toggle, the boolean 'lcbTrashed' property of the item that sent the 'lcb-trash-me' event.
      *
-     * @param evt {object}
+     * @param {object} evt
      * @private
      */
     _lcbTrashMe: function (evt) {
@@ -139,7 +142,9 @@
         var item = evt.model.item;
         var trashed = _.isBoolean(item.lcbTrashed) ? !item.lcbTrashed : true;
         evt.model.set('item.lcbTrashed', trashed);
-        this.toggleClass('lcb-trashed', trashed, evt.model._rootDataHost.children[evt.model.index]);
+        if (evt.model._nodes && evt.model._nodes[0] && evt.model._nodes[0].parentNode) {
+          this.toggleClass('lcb-trashed', trashed, evt.model._nodes[0].parentNode);
+        }
         this._fireLogFire('lcb-trashed', _.cloneDeep(item));
       }
     },
@@ -147,14 +152,67 @@
      * Delete all trashed items.
      */
     lcbEmptyTrash: function () {
-      var _this = this;
-      _.forEachRight(this[this.lcbItemsName], function (item, idx) {
-        if (item.lcbTrashed) {
-          _this.lcbDelete(idx);
-        }
+      this.lcbDeleteItems(function (item) {
+        return item.lcbTrashed;
       });
     },
 
+    lcbDeleteEmpties: function () {
+      var _this = this;
+      this.lcbDeleteItems(function (item) {
+        return _this.lcbIsEmptyItem(item);
+      });
+    },
+
+    /**
+     * Delete all items that the supplied deleteCheckFunc function returns true for.
+     * deleteCheckFunc takes 2 arguments: item and idx (the index of the item)
+     *
+     * @param {function} deleteCheckFunc
+     */
+    lcbDeleteItems: function (deleteCheckFunc) {
+      if (_.isFunction(deleteCheckFunc)) {
+        var _this = this;
+        _.forEachRight(this[this.lcbItemsName], function (item, idx) {
+          if (deleteCheckFunc(item, idx)) {
+            _this.lcbDelete(idx);
+          }
+        });
+      }
+    },
+
+    /**
+     * Return true if item is empty or item is object and each value is empty.
+     *
+     * @param {object} item
+     *
+     * @returns {boolean}
+     */
+    lcbIsEmptyItem: function (item) {
+      var _this = this;
+      return this.lcbIsEmptyValue(item) || !_.find(_.values(item), function (val) {
+            return !_this.lcbIsEmptyValue(val);
+          });
+    },
+
+    /**
+     * Return true if trimmed value is empty.
+     *
+     * @param {*} val
+     *
+     * @returns {boolean}
+     */
+    lcbIsEmptyValue: function (val) {
+      return _.isEmpty(_.trim(val));
+    },
+
+    /**
+     * Return true if number is valid index of items.
+     *
+     * @param {number} idx
+     *
+     * @returns {boolean}
+     */
     _isValidIndex: function (idx) {
       return _.isNumber(idx) && _.inRange(idx, this[this.lcbItemsName].length);
     },
